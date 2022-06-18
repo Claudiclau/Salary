@@ -1,0 +1,75 @@
+package employeetable;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+
+public class EmployeeTable {
+
+    
+ 
+    public static void main(String[] args) {
+        String url="jdbc:mysql://localhost:3306/JavaProject";
+        String username="root";
+        String password="";
+        
+        Connection conn=null;
+        Statement myquery;
+        ResultSet results;
+       
+        String EmpLname;
+        String EmpFname;
+        double EmpAddress1;
+        double EmpAddress2;
+        double Empcity;
+        double Empstate;
+        double EmpDOB;
+        double EmpSalary;
+        
+        PreparedStatement insertStmt;
+        String insertQuery="insert into employee((EmpLName, EmpFname, EmpAddress1, EmpAddress2,EmpCity, EmpState, EmpDOB, EmpBaseSalary) values(?, ?, ?,?,?,?,?,?)";
+        try 
+        {
+            conn=DriverManager.getConnection(url, username, password);
+            
+            //insert query
+            EmpLname=JOptionPane.showInputDialog("Enter the Employee Last Name");
+            EmpFname=JoptionPane.showInputDialog("Enter the Employee First Name");
+            EmpAddress1=Double.parseDouble (JOptionPane.showInputDialog("Enter Employee Address1");
+            EmpAddress2=Double.parseDouble (JOptionPane.showInputDialog("Enter Employee Address2");
+            EmpCity=Double.parseDouble (JOptionPane.showInputDialog("Enter Employee City");
+            EmpState=Double.parseDouble (JOptionPane.showInputDialog("Enter Employee State");
+            EmpDOB=Double.parseDouble (JOptionPane.showInputDialog("Enter Employee Date of Birth");
+            EmpSalary=Double.parseDouble (JOptionPane.showInputDialog("Enter Employee Salary");
+
+            
+            
+            insertStmt=conn.prepareStatement(insertQuery);
+            insertStmt.setString(1, EmpLname);
+            insertStmt.setString(2, EmpFname);
+            insertStmt.setDouble(3, address1);
+            insertStmt.execute();
+            System.out.println("A new record was added!!!");
+            //select query
+            myquery=conn.createStatement();
+            results=myquery.executeQuery("select * from employee;");
+            while(results.next())
+            {
+                System.out.println(results.getInt(1)+"\t");
+                System.out.print(results.getString("EmployeeName")+"\t");
+                System.out.println(results.getDouble("Balance"));
+            }
+            conn.close();
+        }
+        catch(SQLException ex)
+        {
+            ex.printStackTrace();
+            System.out.println("Database error!!!!");
+        }
+    }
+    }
+
